@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch app.js",
+    "style": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@quixo3/prisma-session-store": "^3.1.13",
     "bcryptjs": "^2.4.3",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
@@ -18,6 +21,7 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "prisma": "^5.19.1"
+    "prisma": "^5.19.1",
+    "tailwindcss": "^3.4.12"
   }
 }
