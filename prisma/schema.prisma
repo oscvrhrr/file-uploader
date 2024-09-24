@@ -42,3 +42,10 @@ model File {
  driveId Int
  drive Drive @relation(fields: [driveId], references: [id])
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String   @db.Text  
+  expiresAt   DateTime
+}
