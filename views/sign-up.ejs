@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/output.css">
     <title>Document</title>
 </head>
-<body>
+<body class="bg-white">
     <header>
         <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center">
             <p class="text-5xl lg:px-32">fileDrive</p>
@@ -16,14 +16,15 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <section>
-            <h1>Welome to fileDrive</h1>
-           
-        </section>
+    <main class="lg:flex lg:justify-center lg:items-center h-screen">
+        <form action="" method="post" class="border border-r-slate-200 bg-slate-100 lg:flex lg:flex-col lg:w-2/5 h-2/4">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">password</label>
+            <input type="text" name="password" id="password" required>
+            <button>Create account</button>
+        </form>
+
     </main>
-    <footer>
-        
-    </footer>
 </body>
 </html>
