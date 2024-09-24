@@ -12,3 +12,33 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String @db.Text
+  drives Drive[]
+}
+
+model Drive {
+  id Int @id @default(autoincrement())
+  ownerId Int
+  folders Folder[]
+  files File[]
+  owner User @relation(fields: [ownerId], references: [id])
+}
+
+model Folder {
+ id Int @id @default(autoincrement())
+ name String @db.Text
+ driveId Int
+ drive Drive @relation(fields: [driveId], references: [id])
+
+}
+
+model File {
+ id Int @id @default(autoincrement())
+ path String @db.Text
+ driveId Int
+ drive Drive @relation(fields: [driveId], references: [id])
+}
