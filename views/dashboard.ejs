@@ -8,15 +8,30 @@
 </head>
 <body>
     <header>
-        <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center">
-            <p class="text-5xl lg:px-32">fileDrive</p>
-            <ul class="lg:flex lg:px-32 lg:w-2/4">
-                <a class="border-blue-500 border rounded-lg px-2 py-1" href="/log-in">Log in</a>
-                <a class="border-blue-500 border rounded-lg px-2 py-1" href="/sign-up">Sign up</a>
-            </ul>
-        </nav>
+       
+        <% if (user) { %>
+            <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center">
+                <p class="text-5xl lg:px-32">fileDrive</p>
+                <ul class="lg:flex lg:px-32 lg:w-2/4">
+                    <a class="border-blue-500 border rounded-lg px-2 py-1" href="/log-out">Log out</a>
+                </ul>
+                <h1 class="text-9xl">WELCOME TO DASH</h1>
+            </nav>
+       <%} else {%>
+        <form action="/log-in" method="POST" class="lg:bg-gray-100 lg:w-1/3 lg:h-[40rem] lg:flex lg:flex-col lg:items-center ">
+            <h3>please log in</h3>
+        <label for="username">Username
+            <input id="username" name="username" placeholder="username" type="text" />
+        </label>
+        <label for="password">Password
+            <input id="password" name="password" placeholder="password" type="password" />
+        </label>
+        <button>Log In</button>
+        </form>
+     <%} %>
+       
     </header>
 
-    <h1 class="text-9xl">WELCOME TO DASH</h1>
+    
 </body>
 </html>

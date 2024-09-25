@@ -12,12 +12,27 @@ indexRouter.get("/log-in", (req, res) => {
     res.render("log-in")
 });
 
+indexRouter.get("/log-out", (req, res, next) => {
+    req.logOut((err) => {
+        if(err) {
+            return next(err)
+        }
+        res.redirect("/");
+    });
+});
+
 indexRouter.post("/log-in", 
     passport.authenticate("local", {
         successRedirect: "/dashboard",
-        failureRedirect: "/"
+        failureRedirect: "/log-in"
     })
 );
+
+indexRouter.get("/dashboard", (req, res) => {
+    res.render("dashboard", { user: req.user});
+});
+
+
 
 indexRouter.get("/sign-up", (req, res) => {
     res.render("sign-up")
@@ -25,9 +40,7 @@ indexRouter.get("/sign-up", (req, res) => {
 
 indexRouter.post("/sign-up", userController.createUserInDb)
 
-indexRouter.get("/dashboard", (req, res) => {
-    res.render("dashboard");
-});
+
 
 
 
