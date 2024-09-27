@@ -28,15 +28,11 @@ indexRouter.post("/log-in",
     })
 );
 
-indexRouter.get("/dashboard", (req, res) => {
-    res.render("dashboard", { user: req.user});
-});
-
-
 
 indexRouter.get("/sign-up", (req, res) => {
     res.render("sign-up")
 });
+
 
 indexRouter.post("/sign-up", userController.createUserInDb)
 

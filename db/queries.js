@@ -1,24 +1,59 @@
-const { PrismaClient } = require("@prisma/client")
+const { PrismaClient } = require("@prisma/client");
+const { name } = require("ejs");
 
 const prisma =  new PrismaClient();
 
-userQueries = {
+const createQueries = {
     async createUser(username, password) {
         await prisma.user.create({
             data: {
                 username,
-                password
+                password,
+                drives: {
+                     create: {
+                        name
+                     }
+                }
             }
         })
     },
 
-    // async findUser(username, password) {
-    //     await prisma.
-    // }
+    async createFolder(name, driveId) {
+        await prisma.folder.create({
+            data: {
+                name,
+                drive: {
+                    connect: { id: driveId }
+                }
+            }
+        })
+    }
+};
+
+
+const readQueries = {
+
+    async getUser(userId) {
+        await prisma.user.findUnique({
+            where: {
+
+            }
+        })
+    },
+
+    async getDrive(userId) {
+       const drive =  await prisma.drive.findFirst({
+        where: {
+           ownerId: userId
+        }
+       })
+
+       return drive
+    }
 }
 
-
 module.exports = {
-    userQueries,
+    createQueries,
+    readQueries,
     prisma
 }
