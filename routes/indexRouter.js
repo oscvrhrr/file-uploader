@@ -1,45 +1,31 @@
-const Router = require("express")
 const passport = require("../auth/passportConfig")
+const Router = require("express")
+
 
 const indexRouter = Router();
 const userController = require("../controllers/userController")
 
+
 indexRouter.get("/", (req, res) => {
-    res.render("landing")
+  res.render("landing");
 });
 
 indexRouter.get("/log-in", (req, res) => {
-    res.render("log-in")
+  res.render("log-in");
 });
-
-indexRouter.get("/log-out", (req, res, next) => {
-    req.logOut((err) => {
-        if(err) {
-            return next(err)
-        }
-        res.redirect("/");
-    });
-});
-
-indexRouter.post("/log-in", 
-    passport.authenticate("local", {
-        successRedirect: "/dashboard",
-        failureRedirect: "/log-in"
-    })
-);
-
 
 indexRouter.get("/sign-up", (req, res) => {
-    res.render("sign-up")
+  res.render("sign-up");
 });
 
+indexRouter.post("/sign-up", userController.createUserInDb);
 
-indexRouter.post("/sign-up", userController.createUserInDb)
-
-
-
-
-
+indexRouter.post("/log-in", 
+  passport.authenticate("local", {
+    successRedirect: "/dashboard",
+    failureRedirect: "/log-in"
+  })
+);
 
 
 module.exports = indexRouter;
