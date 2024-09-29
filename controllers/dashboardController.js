@@ -31,8 +31,9 @@ async function createFolderInDrive(req, res) {
 async function uploadFileInDrive(req, res) {
   try {
     const { body, file } = req;
-    await supabase.storage.from('Files_fileupload').upload(file.path, file)
+    const { data } = await supabase.storage.from('Files_fileupload').upload(file.path, file)
     const drive = await db.readQueries.getDrive(req.user.id);
+    await db.createQueries.createFile(body['file-name'], file.path, drive.id )
     const folders = await db.readQueries.getFolders(drive.id);
     const files = await db.readQueries.getFiles(drive.id);
     res.status(200).render("dashboard", { user: req.user, folders: folders, files: files }, console.log(body, file));
