@@ -38,10 +38,17 @@
                     
                     <% folders.forEach((folder) => { %>
                         <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
-                            <i class="fa-regular fa-folder lg:inline-block lg:px-4"></i>
+                            <i class="fa-solid fa-folder lg:inline-block lg:px-4"></i>
                             <p class="lg:inline-block"> <%= folder.name %></p>
                         </aside>
                   <% }) %>
+                  <% files.forEach((file) => { %>
+                    <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
+                        <i class="fa-regular fa-file lg:inline-block lg:px-4"></i>
+                        <p class="lg:inline-block"> <%= file.name %></p>
+                    </aside>
+              <% }) %>
+
                 </section>
             </main>
        <%} else {%>
