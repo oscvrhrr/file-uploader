@@ -11,7 +11,7 @@ const createQueries = {
                 password,
                 drives: {
                      create: {
-                        name
+                        
                      }
                 }
             }
