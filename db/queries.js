@@ -29,10 +29,11 @@ const createQueries = {
         })
     },
 
-    async createFile(name, path, driveId) {
+    async createFile(name, size, path, driveId) {
         await prisma.file.create({
             data: {
                 name,
+                size,
                 path,
                 drive: {
                     connect: { id: driveId}
@@ -72,6 +73,15 @@ const readQueries = {
         return folders
     },
 
+    async getFolderbyId(folderId) {
+        const folder = await prisma.folder.findFirst({
+            where: {
+                id: folderId
+            }
+        })
+        return folder
+    },
+
     async getFiles(driveId) {
         const files = await prisma.file.findMany({
             where: {
@@ -79,6 +89,16 @@ const readQueries = {
             }
         })
         return files
+    },
+
+    async getFileById(fileId) {
+        const file = await prisma.file.findFirst({
+            where: {
+                id: fileId
+            }
+        })
+        console.log(file)
+        return file
     }
 }
 
