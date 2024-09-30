@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center">
+        <p class="text-5xl lg:px-32">FileUploader</p>
+        <ul class="lg:flex lg:px-32 lg:w-1/3 lg:justify-evenly lg:items-center">
+            <a class="border-blue-500 border rounded-lg px-2 py-1" href="/">Home</a>
+            <a class="border-blue-500 border rounded-lg px-2 py-1" href="/dashboard/log-out">Log out</a>
+        </ul>
+    </nav>
+    <section>
+        <% folder.forEach((filedata) => { %>
+            <div>
+                <p><%= filedata.name %></p>
+                <p> <%= filedata.size %></p>
+                <p><%= filedata.created %></p>
+            </div>
+       <% }) %>
+        
+    </section>
+</body>
+</html>

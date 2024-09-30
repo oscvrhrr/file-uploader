@@ -39,16 +39,20 @@
                     </header>
                     
                     <% folders.forEach((folder) => { %>
-                        <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
-                            <i class="fa-solid fa-folder lg:inline-block lg:px-4"></i>
-                            <p class="lg:inline-block"> <%= folder.name %></p>
-                        </aside>
+                        <a href="/dashboard/folder/<%= folder.id  %>">
+                            <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
+                                <i class="fa-solid fa-folder lg:inline-block lg:px-4"></i>
+                                <p class="lg:inline-block"> <%= folder.name %></p>
+                            </aside>
+                        </a>
                   <% }) %>
                   <% files.forEach((file) => { %>
-                    <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
-                        <i class="fa-regular fa-file lg:inline-block lg:px-4"></i>
-                        <p class="lg:inline-block"> <%= file.name %></p>
-                    </aside>
+                    <a href="/dashboard/file/<%= file.id  %>">
+                        <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
+                            <i class="fa-regular fa-file lg:inline-block lg:px-4"></i>
+                            <p class="lg:inline-block"> <%= file.name %></p>
+                        </aside>
+                    </a>
               <% }) %>
 
                 </section>
