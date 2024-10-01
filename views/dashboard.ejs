@@ -7,50 +7,68 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Dashboard</title>
 </head>
-<body class="bg-slate-50">
+<body class="bg-white">
     <header>
        
         <% if (user) { %>
-            <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center">
-                <p class="text-5xl lg:px-32">FileUploader</p>
-                <ul class="lg:flex lg:px-32 lg:w-1/3 lg:justify-evenly lg:items-center">
+            <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center py-2">
+                <div class="lg:px-32 lg:flex lg:items-center">
+                    <i class="fa-regular fa-folder-open fa-2xl"></i>
+                    <p class="text-5xl px-2">FileUploader</p>
+                </div>
+                <ul class="lg:flex lg:px-32 lg:w-1/3 lg:justify-evenly">
                     <a class="border-blue-500 border rounded-lg px-2 py-1" href="/">Home</a>
                     <a class="border-blue-500 border rounded-lg px-2 py-1" href="/dashboard/log-out">Log out</a>
                 </ul>
             </nav>
             <main>
-                <h1 class="lg:text-2xl lg:mx-auto lg:w-fit lg:mt-12">Welcome <%= user.username %> to FileUploader</h1>
+                <h1 class="lg:text-3xl text-center mt-8 lg:font-semibold">Welcome <span class="capitalize"><%= user.username %></span> to FileUploader</h1>
+                <div class="flex lg:mt-12 justify-evenly flex-row-reverse">
+                    <form action="/dashboard/create-folder" method="post">
+                        <input class="lg:w-28 border border-blue-100" value="Untitled Folder" placeholder="folder name" type="text" name="name" id="name">
+                        <button class="fa-regular fa-folder">+</button>
+                    </form>
+                    <form class="border  flex w-fit" action="/dashboard/file" method="post" enctype="multipart/form-data">
+                        <input class="rounded bg-blue-300 px-2 py-1"  type="file" name="file" id="file">
+                        <input class="lg:w-28 border border-blue-100" type="text" name="file-name" id="file-name" placeholder="file name" required>
+                        <button class="rounded bg-blue-300 px-2 py-1" type="submit">Upload File</button>
+                    </form>
+                </div>
                 <section>
-                    <header class="lg:flex lg:w-3/5 lg:mx-auto lg:justify-evenly bg-slate-200 border border-slate-300 rounded-lg">
-                        <p>name</p>
-                        <p>date created</p>
-                        <p>file size</p>
-                        <form action="/dashboard/create-folder" method="post">
-                            <input type="text" name="name" id="name">
-                            <button class="fa-regular fa-folder">+</button>
-                        </form>
-                        <form class="border border-red-200 w-32" action="/dashboard/file" method="post" enctype="multipart/form-data">
-                            <label for="file">add file</label>
-                            <input type="file" name="file" id="file">
-                            <!-- <label for="file-name">file name</label> -->
-                            <input type="text" name="file-name" id="file-name" placeholder="file name" required>
-                            <button type="submit">submit</button>
-                        </form>
+                    <header class="lg:flex lg:w-3/4 lg:mx-auto lg:justify-between px-4 bg-slate-50 border border-slate-200 rounded-lg">
+                        <p class="lg:w-1/3">name</p>
+                        <p class="lg:w-1/3">date created</p>
+                        <p class="lg:w-1/3">file size</p>
+                        <p>options</p>
                     </header>
                     
                     <% folders.forEach((folder) => { %>
                         <a href="/dashboard/folder/<%= folder.id  %>">
-                            <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
-                                <i class="fa-solid fa-folder lg:inline-block lg:px-4"></i>
-                                <p class="lg:inline-block"> <%= folder.name %></p>
+                            <aside class="lg:w-3/4 hover:bg-slate-100 lg:mx-auto lg:flex lg:justify-between bg-slate-50 border border-slate-200 rounded-lg lg:py-2 lg:px-2">
+                                <div class="w-1/3">
+                                    <i class="fa-solid fa-folder lg:inline-block lg:px-4"></i>
+                                    <p class="lg:inline-block"> <%= folder.name %></p>
+                                </div>
+                                <% const date = new Date(folder.created) %>
+                                <% const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric'}); %>
+                                <p class="lg:w-1/3"><%= formattedDate %></p>
+                                <p class="lg:w-1/3">-</p>
+                                <i class="fa-solid fa-ellipsis-vertical pr-6"></i>
                             </aside>
                         </a>
                   <% }) %>
                   <% files.forEach((file) => { %>
                     <a href="/dashboard/file/<%= file.id  %>">
-                        <aside class="lg:w-3/5 lg:mx-auto bg-slate-200 border border-slate-300 rounded-lg">
-                            <i class="fa-regular fa-file lg:inline-block lg:px-4"></i>
-                            <p class="lg:inline-block"> <%= file.name %></p>
+                        <aside class="lg:w-3/4 lg:mx-auto hover:bg-slate-100 lg:flex lg:justify-between lg:px-2 bg-slate-50 border border-slate-200 rounded-lg lg:py-2">
+                            <div class="w-1/3">
+                                <i class="fa-regular fa-file lg:inline-block lg:px-4"></i>
+                                <p class="lg:inline-block"> <%= file.name %></p>
+                            </div>
+                            <% const date = new Date(file.created) %>
+                            <% const fomattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); %>
+                            <p class="w-1/3"><%= fomattedDate %></p>
+                            <p class="w-1/3"><%= file.size %> Bytes</p>
+                            <i class="fa-solid fa-ellipsis-vertical pr-6"></i>
                         </aside>
                     </a>
               <% }) %>
