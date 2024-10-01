@@ -1,11 +1,22 @@
 const Router = require("express");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+
+
 const checkAuth = require("../middleware/checkAuth")
 
 const dashboardRouter = Router();
 const { getUserAndData, createFolderInDrive, uploadFileInDrive, getFileData, getFolderData, logOutOfSession } = require("../controllers/dashboardController")
 
+const storage = multer.memoryStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+});
+
+const upload = multer({ storage });
 
 dashboardRouter.get("/", checkAuth, getUserAndData);
 
