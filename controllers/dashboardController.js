@@ -1,6 +1,8 @@
 const db = require("../db/queries")
-const supabase = require("../storage/supabaseClient")
-const { decode } = require("base64-arraybuffer")
+const decodeFile = require("../utils/decodeFile")
+const uploadFileInBucket = require("../storage/uploadFile")
+
+
 
 
 async function getUserAndData (req, res) {
@@ -32,14 +34,11 @@ async function createFolderInDrive(req, res) {
 async function uploadFileInDrive(req, res) {
   try {
     const { body, file } = req;
-    const encodedFile = file;
-    const base64 = decode(file.buffer.toString('base64'));
-    console.log(base64)
-    await supabase.storage.from('Files_fileupload').upload(`uploads/${file.originalname}`, base64, {
-      contentType: encodedFile.mimetype
-    });
+    const metaFile = file;
+    const outputFile = decodeFile(metaFile);
+    uploadFileInBucket(outputFile, metaFile);
     const drive = await db.readQueries.getDrive(req.user.id);
-    await db.createQueries.createFile(body['file-name'], file.size, `uploads/${file.originalname}`, drive.id)
+    await db.createQueries.createFile(body['file-name'], metaFile.size, `uploads/${metaFile.originalname}`, drive.id)
     const folders = await db.readQueries.getFolders(drive.id);
     const files = await db.readQueries.getFiles(drive.id);
     res.status(200).render("dashboard", { user: req.user, folders: folders, files: files });
