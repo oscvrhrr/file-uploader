@@ -32,6 +32,7 @@ model Folder {
  id Int @id @default(autoincrement())
  name String @db.Text
  created DateTime @default(now())
+ files File[]
  driveId Int
  drive Drive @relation(fields: [driveId], references: [id])
 
@@ -43,7 +44,9 @@ model File {
  size Int?
  created DateTime @default(now())
  path String @db.Text
+ folderId Int?
  driveId Int
+ folder Folder? @relation(fields: [folderId], references: [id])
  drive Drive @relation(fields: [driveId], references: [id])
 }
 
