@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require("node:path");
 const express = require("express");
 const passport  = require("./auth/passportConfig");
@@ -45,6 +46,6 @@ app.use("/dashboard", dashboardRouter)
 
 
 
-app.listen(4001, () => {
-  console.log("server running on port 4001")
+app.listen(process.env.PORT, () => {
+  console.log("server running on port")
 })
