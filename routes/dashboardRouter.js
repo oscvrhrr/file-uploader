@@ -5,7 +5,8 @@ const multer = require("multer");
 const checkAuth = require("../middleware/checkAuth")
 
 const dashboardRouter = Router();
-const { getUserAndData, createFolderInDrive, uploadFileInDrive, getFileData, getFolderData, logOutOfSession } = require("../controllers/dashboardController")
+const { getUserAndDrive, createFolderInDrive, uploadFileInDrive, getFileData, deleteFileById, deleteFolderById, logOutOfSession } = require("../controllers/dashboardController")
+const { getFolderAndFilesById, uploadFileInFolder } = require("../controllers/folderController")
 
 const storage = multer.memoryStorage({
     destination: function (req, file, cb) {
@@ -18,11 +19,17 @@ const storage = multer.memoryStorage({
 
 const upload = multer({ storage });
 
-dashboardRouter.get("/", checkAuth, getUserAndData);
+dashboardRouter.get("/", checkAuth, getUserAndDrive);
 
-dashboardRouter.get("/folder/:folderId", getFolderData)
+dashboardRouter.post("/file/:fileId", deleteFileById )
+
+dashboardRouter.get("/folder/:folderId", getFolderAndFilesById)
+
+dashboardRouter.post("/folder/:folderId/file", upload.single("file"), uploadFileInFolder);
 
 dashboardRouter.post("/create-folder", createFolderInDrive);
+
+dashboardRouter.post("/folder/:folderId", deleteFolderById )
 
 dashboardRouter.get("/file/:fileId", getFileData);
 
