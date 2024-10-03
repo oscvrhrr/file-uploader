@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "build": "npx prisma generate && npx prisma migrate deploy",
+    "build": "npx prisma migrate",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node --watch app.js",
     "style": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch"
