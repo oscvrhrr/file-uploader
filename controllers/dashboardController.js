@@ -19,7 +19,8 @@ async function getUserAndDrive (req, res) {
 async function createFolderInDrive(req, res) {
   try {
     const { name } = req.body;
-    const drive = await db.readQueries.getDrive(req.user.id);
+    const user = await req.user;
+    const drive = await db.readQueries.getDrive(user.id);
     await db.createQueries.createFolder(name, drive.id);
     res.status(201).redirect("/dashboard")
   } catch (error) {
@@ -30,11 +31,12 @@ async function createFolderInDrive(req, res) {
 async function uploadFileInDrive(req, res) {
   try {
     const { body, file } = req;
+    const user = await req.user;
     const metaFile = file;
     const outputFile = decodeFile(metaFile);
-    uploadFileInBucket(outputFile, metaFile);
-    const drive = await db.readQueries.getDrive(req.user.id);
-    await db.createQueries.createFile(body['file-name'], metaFile.size, `uploads/${metaFile.originalname}`, drive.id, null)
+    uploadFileInBucket(outputFile, metaFile, user.username);
+    const drive = await db.readQueries.getDrive(user.id);
+    await db.createQueries.createFile(body['file-name'], metaFile.size, `user-uploads/${user.username}/${metaFile.originalname}`, drive.id, null)
     res.status(200).redirect("/dashboard")
   } catch (err) {
     console.error(err)

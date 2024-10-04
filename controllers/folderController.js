@@ -16,11 +16,12 @@ async function getFolderAndFilesById(req, res) {
 
 async function uploadFileInFolder(req, res) {
   try {
+    const user = await req.user
     const folderId = Number(req.params.folderId)
     const outputFile = decodeFile(req.file);
-    uploadFileInBucket(outputFile, req.file);
+    uploadFileInBucket(outputFile, req.file, user.username);
     const drive = await db.readQueries.getDrive(req.user.id);
-    await db.createQueries.createFile(req.body['file-name'], req.file.size, `uploads/${req.file.originalname}`, drive.id, folderId)
+    await db.createQueries.createFile(req.body['file-name'], req.file.size, `user-uploads/${user.username}/${req.file.originalname}`, drive.id, folderId)
     res.redirect(`/dashboard/folder/${folderId}`)
   } catch (err) {
     console.error("Error uploading file in folder", err)
