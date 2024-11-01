@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>file</title>
+</head>
+<body>
+    <nav class="lg:w-full lg:flex lg:border-b lg:border-blue-500 bg-blue-400 text-gray-100 justify-between items-center">
+        <p class="text-5xl lg:px-32">FileUploader</p>
+        <ul class="lg:flex lg:px-32 lg:w-1/3 lg:justify-evenly lg:items-center">
+            <a class="border-blue-500 border rounded-lg px-2 py-1" href="/">Home</a>
+            <a class="border-blue-500 border rounded-lg px-2 py-1" href="/dashboard/log-out">Log out</a>
+        </ul>
+    </nav>
+    <section>
+        <% file.forEach((filedata) => { %>
+            <div class="lg:w-3/4 lg:mx-auto lg:flex lg:flex-col lg:h-64 lg:justify-between bg-slate-50 border border-slate-200 rounded-lg lg:p-10 mt-24">
+                <div class="h-36 w-36 overflow-clip">
+                    <img class="object-cover" src="<%= process.env.SUPABASE_URL + '/storage/v1/object/public/Files_fileupload/' + filedata.path  %>" alt="">
+                </div>
+                <p><span class="font-semibold">Filename:</span> <%= filedata.name %></p>
+                <p><span class="font-semibold">Size:</span> <%= filedata.size %> Bytes</p>
+                <% const date = new Date(filedata.created) %>
+                <% const fomattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); %>
+                <p class="w-1/3"><span class="font-semibold">Created:</span> <%= fomattedDate %></p>
+                 <% const fileName = filedata.path.split("/").pop() %>
+                <a href="<%= process.env.SUPABASE_URL + '/storage/v1/object/public/Files_fileupload/' + filedata.path + '?download=' + fileName  %>" class="rounded bg-blue-300 px-2 py-1 text-center">Download</a>
+            </div>
+       <% }) %>
+    </section>
+</body>
+</html>
