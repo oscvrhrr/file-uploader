@@ -1,45 +1,29 @@
 require("dotenv").config();
-const path = require("node:path");
 const express = require("express");
 const passport  = require("./auth/passportConfig");
-const session = require("express-session");
-const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { prisma } = require("./db/queries");
-const cacheControl = require("./middleware/cacheControl");
 const dashboardRouter = require("./routes/dashboardRouter");
 const indexRouter  = require("./routes/indexRouter");
+const jwt = require("jsonwebtoken")
+const cors = require("cors")
 
 const app = express();
 
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+
 
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
-    cookie: {
-      maxAge: 1 * 60 * 60 * 1000 // ms
-    },
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    store: new PrismaSessionStore(
-      prisma,
-      {
-        checkPeriod: 2 * 60 * 1000, //ms
-        dbRecordIdIsSessionId: true,
-        dbRecordIdFunction: undefined,
-      }
-    )
-  })
-);
-app.use(passport.session());
-app.use(cacheControl)
+app.use(cors())
 
 
+
+
+app.post("/login", passport.authenticate("jwt", { session: false }), (req, res) => {
+  const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: "2hr" })
+  res.json(token)
+});
 
 app.use("/", indexRouter)
 app.use("/dashboard", dashboardRouter)
