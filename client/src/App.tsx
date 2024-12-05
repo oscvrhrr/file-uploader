@@ -1,12 +1,22 @@
-
-import './App.css'
+import { BrowserRouter } from "react-router"
+import { Route, Routes } from "react-router"
+import ProtectedRoutes from "./lib/protectedRoutes"
+import Landing from "./pages/Landing"
+import Dashboard from "./pages/Dashboard"
 
 function App() {
 
 
   return (
     <>
-      <h1 className='text-3xl font-bold underline bg-slate-500'>hello</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route element={ <ProtectedRoutes/> }>
+            <Route path="/dashboard" element={ <Dashboard/> }/>
+          </Route>
+          <Route path="/" element={ <Landing/> } />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
