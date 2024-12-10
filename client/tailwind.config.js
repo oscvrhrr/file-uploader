@@ -7,19 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        'radixcyan': {
-          100: '#F9FDFF',
-          200: '#EFFBFE',
-          300: '#D6F8FF',
-          400: '#BCF3FF',
-          500: '#A2ECFD',
-          600: '#83E1F6',
-          700: '#53D2EC',
-          800: '#00BDDF',
-          900: '#00A6C5',
-          1000: '#0099B5',
-          1100: '#007F97',
-          1200: '#003F4D'
+        'radixindigo': {
+          100: '#FDFDFE',
+          200: '#F7F9FF',
+          300: '#EDF2FE',
+          400: '#E1E9FF',
+          500: '#D2DEFF',
+          600: '#C1D0FF',
+          700: '#ABBDF9',
+          800: '#8DA4EF',
+          900: '#3E63DD',
+          1000: '#3358D4',
+          1100: '#3A5BC7',
+          1200: '#1F2D5C'
         },
         'radixgray': {
           100: '#FCFCFD',
