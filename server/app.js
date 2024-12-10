@@ -1,11 +1,10 @@
 require("dotenv").config();
 const express = require("express");
-const passport  = require("./auth/passportConfig");
-const { prisma } = require("./db/queries");
-const dashboardRouter = require("./routes/dashboardRouter");
-const indexRouter  = require("./routes/indexRouter");
-const jwt = require("jsonwebtoken")
+const userRouter = require("./routes/userRouter")
+const folderRouter = require("./routes/folderRouter")
+const driveRouter = require("./routes/driveRouter")
 const cors = require("cors")
+
 
 const app = express();
 
@@ -13,23 +12,23 @@ const app = express();
 
 
 
-app.use(express.static("public"));
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors());
 
 
 
+app.use("/users", userRouter)
 
-app.post("/login", passport.authenticate("jwt", { session: false }), (req, res) => {
-  const token = jwt.sign({ id: req.user.id }, process.env.JWT_SECRET, { expiresIn: "2hr" })
-  res.json(token)
-});
+app.use("/drives", driveRouter)
 
-app.use("/", indexRouter)
-app.use("/dashboard", dashboardRouter)
-
+app.use("/folders", folderRouter)
 
 
 app.listen(process.env.PORT, () => {
   console.log("server running on port")
 })
+
+
+
+// app.use("/dashboard", dashboardRouter)
