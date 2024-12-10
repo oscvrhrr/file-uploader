@@ -8,7 +8,34 @@
   <br />
 </p>
 
-# Features
+
+## Users
+| Description | Method | URL |
+| ----------- | ------ | --- |
+| create user | POST | /users/signup |
+| login user | POST | /users/login |
+| current user data | GET | /users/me |
+| delete a user | DELETE | /users/:userid |
+
+## Drives
+| Description | Method | URL |
+| ----------- | ------ | --- |
+| new folder in a drive | POST | /drives/:driveid/folder |
+| new file in a drive  | POST | /drives/:driveid/file |
+| get a drive | GET | /drives/:driveid |
+
+
+## Folders
+| Description | Method | URL |
+| ----------- | ------ | --- |
+| new folder in a folder| POST | /folders/:folderid/folder |
+| new file in a folder | POST | /foldres/:folderid/file |
+| get a folder| GET | /folders/:folderid |
+| get a file from a folder| GET | /folders/:folderid/files/:fileid |
+
+
+
+
 
 ## Auth
 - [x] Sign Up
@@ -27,12 +54,12 @@
 - [x] Manage Files
 
 ## Todo
-- [ ] React for modern snapy frontend
+- [dev] React for modern snapy frontend
 - [ ] Make responsive 
  
-# Technology Used
+## Technology Used
 * Auth: Passport.js (Local)
-* Frontend: EJS, TailwindCSS
+* Frontend: React frontend in development
 * Backend: Node, Express, Prisma
 * Database: PostgreSQL
 * Session management: Prisma session store
