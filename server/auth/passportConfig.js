@@ -33,10 +33,9 @@ passport.use(
 
 passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
   try {
-    const user = await prisma.findFirst({
+    const user = await prisma.user.findFirst({
       where: { id: jwt_payload.id }
     });
-
     if(user) {
       return done(null, user);
     } else {
