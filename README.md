@@ -34,7 +34,18 @@
 | get a file from a folder| GET | /folders/:folderid/files/:fileid |
 
 
+## Problems I faced
+* Decoupling a monolithic application into seperate components, modularizing the frontend and backend. This was a challenge
+because it was the first time I faced this problem.
 
+
+<!-- * how is tacked this issue was dessinging my api first and coding it out afterwards, this approached help because it allowed me to plan the way i was going to decouple the app before and set me up with a plan to execute -->
+
+<!-- * issue i faced was preventing an infinte useEffect loop when i set the Drive as a dependecy. -->
+
+<!-- * How i solved it was passing a boolean as a prop and tirggering it when i needed to run the useeffect again -->
+
+<!-- * issue i face was sending contolled state to the backend as differnt types.  -->
 
 
 ## Auth
@@ -54,7 +65,7 @@
 - [x] Manage Files
 
 ## Todo
-- [dev] React for modern snapy frontend
+- [x] React for modern snapy frontend
 - [ ] Make responsive 
  
 ## Technology Used
