@@ -12,7 +12,7 @@ userRouter.post("/login", passport.authenticate("local", { session: false }), (r
   res.status(200).json({ token })
 });
 
-userRouter.get("/me", passport.authenticate("jwt", { session: false }), userController.getUserDrive );
+userRouter.get("/me", passport.authenticate("jwt", { session: false }), userController.getUserDrive);
 
 // userRouter.delete("/:id",)
 
