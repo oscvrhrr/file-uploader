@@ -6,11 +6,10 @@ const uploadFileInBucket = require("../storage/uploadFile");
 
 async function createFolderInDrive(req, res) {
   try {
-    const { name } = req.body;
     const user = await req.user;
     const drive = await db.readQueries.getDrive(user.id);
-    await db.createQueries.createFolder(name, drive.id);
-    res.status(201).redirect("/dashboard")
+    await db.createQueries.createFolder("Untitled folder", drive.id);
+    res.status(201).json("folder created")
   } catch (error) {
     console.error("Internal server error");
   }
@@ -18,14 +17,13 @@ async function createFolderInDrive(req, res) {
 
 async function uploadFileInDrive(req, res) {
   try {
-    const { body, file } = req;
-    const user = await req.user;
+    const { body, file, user } = req;
     const metaFile = file;
     const outputFile = decodeFile(metaFile);
     uploadFileInBucket(outputFile, metaFile, user.username);
     const drive = await db.readQueries.getDrive(user.id);
-    await db.createQueries.createFile(body['file-name'], metaFile.size, `user-uploads/${user.username}/${metaFile.originalname}`, drive.id, null)
-    res.status(200).redirect("/dashboard")
+    await db.createQueries.createFile(body.name, metaFile.size, `user-uploads/${user.username}/${metaFile.originalname}`, drive.id, null)
+    res.status(201).json("success file created")
   } catch (err) {
     console.error(err)
   }
