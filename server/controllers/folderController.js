@@ -1,0 +1,51 @@
+const db = require("../db/queries")
+const decodeFile = require("../utils/decodeFile");
+const uploadFileInBucket = require("../storage/uploadFile")
+
+
+async function getFileData(req, res) {
+  try {
+    const fileId = Number(req.params.fileId)
+    const file = await db.readQueries.getFileById(fileId)
+    console.log(file)
+    res.status(200).json(file)
+  } catch (err) {
+    console.err("error getting file data", err)
+  }
+}
+
+
+async function getFolderAndFilesById(req, res) {
+  try {
+    const folderId = Number(req.params.folderId);
+    const folder = await db.readQueries.getFolderbyId(folderId);
+    console.log(folder)
+    res.status(200).render("folder", { folder: [folder], files: folder.files})
+  } catch (err) {
+    console.err("error opening folder", err)
+  }
+}
+
+async function uploadFileInFolder(req, res) {
+  try {
+    const user = await req.user
+    const folderId = Number(req.params.folderId)
+    const outputFile = decodeFile(req.file);
+    uploadFileInBucket(outputFile, req.file, user.username);
+    const drive = await db.readQueries.getDrive(req.user.id);
+    await db.createQueries.createFile(req.body['file-name'], req.file.size, `user-uploads/${user.username}/${req.file.originalname}`, drive.id, folderId)
+    res.redirect(`/dashboard/folder/${folderId}`)
+  } catch (err) {
+    console.error("Error uploading file in folder", err)
+  }
+}
+
+
+
+
+
+module.exports = {
+    getFileData,
+    getFolderAndFilesById,
+    uploadFileInFolder,
+}
