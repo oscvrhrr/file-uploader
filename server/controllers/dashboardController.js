@@ -1,18 +1,8 @@
-const db = require("../db/queries")
+const db = require("../db/queries");
 
 
 
 
-
-async function getFileData(req, res) {
-  try {
-    const fileId = Number(req.params.fileId)
-    const file = await db.readQueries.getFileById(fileId)
-    res.status(200).render("file", { file:[file] })
-  } catch (err) {
-    console.err("error getting file data", err)
-  }
-}
 
 async function deleteFileById(req, res) {
   try {
