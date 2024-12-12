@@ -3,6 +3,18 @@ const decodeFile = require("../utils/decodeFile");
 const uploadFileInBucket = require("../storage/uploadFile")
 
 
+async function getFileData(req, res) {
+  try {
+    const fileId = Number(req.params.fileId)
+    const file = await db.readQueries.getFileById(fileId)
+    console.log(file)
+    res.status(200).json(file)
+  } catch (err) {
+    console.err("error getting file data", err)
+  }
+}
+
+
 async function getFolderAndFilesById(req, res) {
   try {
     const folderId = Number(req.params.folderId);
@@ -33,6 +45,7 @@ async function uploadFileInFolder(req, res) {
 
 
 module.exports = {
+    getFileData,
     getFolderAndFilesById,
     uploadFileInFolder,
 }
