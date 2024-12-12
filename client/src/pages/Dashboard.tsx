@@ -32,7 +32,7 @@ const Dashboard = () => {
   const createFolder = async(event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:4001/drives/${drive.id}/folder`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}drives/${drive.id}/folder`, {
         method: "POST",
         mode: "cors",
         headers: {
@@ -52,7 +52,7 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     const fetchUser = async() => {
       try {
-        const response = await fetch("http://localhost:4001/users/me", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}users/me`, {
           method: "GET",
           mode: "cors",
           headers: {

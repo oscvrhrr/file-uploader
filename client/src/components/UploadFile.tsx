@@ -31,7 +31,7 @@ const UploadFile = ({ toggle, driveId, onUploadSuccess }:UploadFileProps) => {
         formData.append("file", file)
       }
 
-      const response = await fetch(`http://localhost:4001/drives/${driveId}/file`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}drives/${driveId}/file`, {
         method: "POST",
         mode: "cors",
         headers: {

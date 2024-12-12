@@ -21,7 +21,7 @@ const Drive = ({ drive }:DriveProps) => {
 
 
   const handleFile = async(fileId: number) => {
-    const response =  await fetch(`http://localhost:4001/folders/file/${fileId}`, {
+    const response =  await fetch(`${import.meta.env.VITE_BASE_URL}folders/file/${fileId}`, {
       method: "GET",
       mode: "cors",
       headers: {

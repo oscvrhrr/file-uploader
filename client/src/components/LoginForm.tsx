@@ -17,7 +17,7 @@ const LoginForm = () => {
   const handleLogin =  async(e: React.FormEvent) => {
     e.preventDefault();
    try {
-     const response = await fetch("http://localhost:4001/users/login", {
+     const response = await fetch(`${import.meta.env.VITE_BASE_URL}users/login`, {
        method: "POST",
        mode: "cors",
        headers: {
