@@ -5,9 +5,10 @@ import { useState } from "react";
 interface UploadFileProps {
   toggle: () => void ;
   driveId: number | null;
+  onUploadSuccess: () => void
 }
 
-const UploadFile = ({ toggle, driveId }:UploadFileProps) => {
+const UploadFile = ({ toggle, driveId, onUploadSuccess }:UploadFileProps) => {
   const [inputValue, setInputValue] = useState({ name: "" });
   const [file, setFile] = useState<File | null>(null);
   
@@ -40,6 +41,8 @@ const UploadFile = ({ toggle, driveId }:UploadFileProps) => {
       });
       if(response.ok) {
         setInputValue({ name: "" })
+        setFile(null)
+        onUploadSuccess()
       }
     } catch(error) {
       console.log(error, "error posting file")
@@ -47,7 +50,6 @@ const UploadFile = ({ toggle, driveId }:UploadFileProps) => {
     
   }
 
-  console.log(inputValue)
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-5 z-40">
@@ -60,7 +62,7 @@ const UploadFile = ({ toggle, driveId }:UploadFileProps) => {
                   <input onChange={ handleInputs } value={inputValue.name} className="border mt-2 w-full mb-4 placeholder:italic placeholder:text-slate-400 block bg-white border-slate-300 rounded-md py-2 pl-3 shadow-sm focus:outline-none focus:border-radixindigo-900 focus:ring-radixindigo-900 focus:ring-1 sm:text-sm" type="text" name="name" id="file-name" placeholder="Name your file..." required/>
                   <input onChange={ handleFile  } className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-radixindigo-900 file:text-white hover:file:bg-radixindigo-1000"  type="file" name="file" id="file"/>
                 </div>
-                 <button onClick={ sendFile } className="text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 rounded" type="submit">Upload File</button>
+                 <button onClick={ (event) => { sendFile(event); toggle() } } className="text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 rounded" type="submit">Upload File</button>
         </form>
     </div>
   )
