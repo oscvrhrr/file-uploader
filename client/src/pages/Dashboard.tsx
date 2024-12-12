@@ -6,13 +6,14 @@ import { DriveType } from "../types/drive";
 import { Link } from "react-router";
 import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../components/context/UserContext";
-import { Button, Container } from "@radix-ui/themes";
+import { Button, Flex } from "@radix-ui/themes";
 import { UploadIcon, PlusIcon } from "@radix-ui/react-icons";
 
 
 const Dashboard = () => {
-  const { setUser } = useContext(UserContext);
-  const [toggle, setToggle] = useState(false)
+  const { setUser, user } = useContext(UserContext);
+  const [toggle, setToggle] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [drive, setDrive] = useState<DriveType>({
     id: null,
     ownerId: null,
@@ -22,6 +23,29 @@ const Dashboard = () => {
 
   const handleButtonToggle = () => {
     setToggle(!toggle)
+  }
+
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+  }
+
+  const createFolder = async(event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:4001/drives/${drive.id}/folder`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+      if(response.ok) {
+        console.log("folder created")
+      }
+    } catch(error) {
+      console.log(error, "error creating folder")
+    }
   }
 
   useEffect(() => {
@@ -47,7 +71,8 @@ const Dashboard = () => {
       }
     };
     fetchUser();
-  }, []);
+  }, [refresh]);
+  
 
   return (
     <div className="bg-radixindigo-200 h-screen">
@@ -59,20 +84,23 @@ const Dashboard = () => {
           Logout
         </Link>
       </Navbar>
-      <Container className="flex justify-end px-10 py-4 ">
+
+      <Flex className="flex justify-between px-10 py-4">
+        <div>
+         <h2 className="font-bold">{user && user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s Drive</h2>
+        </div>
         <div className="flex">
-          <Button className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 rounded" size="2" variant="soft" radius="large">
+          <Button onClick={ async(event) => { await createFolder(event); handleRefresh(); } } className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 rounded" size="2" variant="soft" radius="large">
             <PlusIcon/> Create folder
           </Button>
           { toggle && 
-            <UploadFile toggle={ handleButtonToggle }/>
-
+            <UploadFile driveId={ drive.id } onUploadSuccess={ handleRefresh } toggle={ handleButtonToggle }/>
           }
           <Button onClick={handleButtonToggle} className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 ml-4 rounded" size="3" variant="soft" radius="large">
             <UploadIcon/> Upload file
           </Button>
         </div>
-      </Container>
+      </Flex>
       <Drive drive={drive} />
     </div>
   );
