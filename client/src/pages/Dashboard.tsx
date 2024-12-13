@@ -78,7 +78,7 @@ const Dashboard = () => {
     <div className="bg-radixindigo-200 h-screen">
       <Navbar>
         <Link
-          className="hover:bg-radixgray-300 rounded-lg px-1 py-0.5 cursor-pointer"
+          className="hover:bg-radixindigo-700 rounded px-2 py-0.5 cursor-pointer"
           to="/"
         >
           Logout
