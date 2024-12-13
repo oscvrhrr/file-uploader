@@ -10,7 +10,8 @@ const SignupForm = () => {
     setInputValues((prevstate) => ({...prevstate, [name]: value }))
   }
 
-  const signUpUser = async() => {
+  const signUpUser = async(event: React.FormEvent) => {
+    event.preventDefault();
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}users/signup`, {
         method: "POST",
