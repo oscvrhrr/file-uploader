@@ -6,13 +6,14 @@ import { Link } from "react-router";
 
 interface FileImageProps {
   path: string;
+  filename: string;
   toggle: () => void;
 }
 
-const FileImage = ({ path, toggle }: FileImageProps) => {
+const FileImage = ({ path, toggle, filename }: FileImageProps) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-[2px] z-40">
-      <div className="flex justify-between w-1/2 ml-10 mt-4">
+    <div className="fixed inset-0 bg-black bg-[rgba(0, 0, 0, 0.95)] bg-opacity-50 backdrop-blur-[2px] z-40">
+      <div className="flex justify-between items-center w-1/2 ml-10 mt-4">
         <Toggle.Root
         onClick={toggle}
         aria-label="Toggle italic"
@@ -20,7 +21,11 @@ const FileImage = ({ path, toggle }: FileImageProps) => {
         >
           <Cross1Icon/>
         </Toggle.Root>
-        <Link to={ path + "?download=filename.jpg" }  className="flex text-sm text-white items-center border px-2 py-1 rounded">
+        <div className="flex text-radixindigo-300 text-lg">
+          <p className="mr-1 font-medium">Filename:</p>
+          <p>{filename}</p>
+        </div>
+        <Link to={ path + "?download=filename.jpg" }  className="flex text-sm text-radixgray-500 items-center border px-2 py-1 rounded">
           <DownloadIcon className="mr-1"/>
           Download
         </Link>
