@@ -35,8 +35,8 @@
 
 
 ## Problems I faced
-* Decoupling a monolithic application into seperate components, modularizing the frontend and backend. This was a challenge
-because it was the first time I faced this problem.
+<!-- * Decoupling a monolithic application into seperate components, modularizing the frontend and backend. This was a challenge
+because it was the first time I faced this problem. -->
 
 
 <!-- * how is tacked this issue was dessinging my api first and coding it out afterwards, this approached help because it allowed me to plan the way i was going to decouple the app before and set me up with a plan to execute -->
