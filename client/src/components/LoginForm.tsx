@@ -1,9 +1,16 @@
 import * as Form from "@radix-ui/react-form"
 import React, { useState } from "react"
 import { useNavigate } from "react-router"
+import * as Toggle from "@radix-ui/react-toggle"
+import { Cross1Icon } from "@radix-ui/react-icons"
 
 
-const LoginForm = () => {
+interface LoginFormProps {
+  toggle: () => void ;
+}
+
+
+const LoginForm = ({toggle}: LoginFormProps ) => {
   const [inputValues, setInputValues] = useState({ username: "", password: "" })
   const navigate = useNavigate()
 
@@ -45,22 +52,32 @@ const LoginForm = () => {
 
   return (
     <>
-      <Form.Root onSubmit={ handleLogin } className="w-[280px] h-[300px] z-10 p-8 border border-radixgray-700 rounded-lg absolute left-1/2 bottom-1/2 bg-radixgray-200">
-        <h2 className="text-center">Log in</h2>
+      <Form.Root onSubmit={ handleLogin } className="w-[280px] h-[360px] z-10 px-8 pb-8 pt-4 border border-radixgray-700 rounded-lg absolute left-1/2 bottom-[41%] bg-radixindigo-200">
+        <div className="flex justify-end">
+          <Toggle.Root onClick={toggle} className="flex border size-[35px] items-center justify-center rounded bg-white leading-4 text-mauve11  hover:bg-violet3 focus:shadow-[0_0_0_2px] focus:shadow-black data-[state=on]:bg-violet6 data-[state=on]:text-violet12">
+            <Cross1Icon/>
+          </Toggle.Root>
+        </div>
+
+        <h2 className="text-center font-bold text-black">Log in</h2>
         <Form.Field className="mb-2.5 grid" name="username">
           <div className="flex items-baseline flex-col justify-between">
             <Form.Label className="text-[15px] font-medium leading-[35px] text-black">Username</Form.Label>
-            <Form.Control placeholder="Enter your username" value={inputValues.username} onChange={ handleInputValues } className="border box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-white hover:shadow-[0_0_0_1px_#53D2EC] focus:shadow-[0_0_0_2px_#53D2EC]"/>
+            <Form.Control placeholder="Enter your username" value={inputValues.username} onChange={ handleInputValues } className="border box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-white hover:shadow-radixindigo-800 focus:shadow-radixindigo-800"/>
           </div>
         </Form.Field>
         <Form.Field className="mb-2.5 grid" name="password">
           <div className="flex items-baseline flex-col justify-between">
             <Form.Label className="text-[15px] font-medium leading-[35px] text-black">Password</Form.Label>
-            <Form.Control placeholder="Enter your password" onChange={ handleInputValues } value={inputValues.password} className="border box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-white hover:shadow-[0_0_0_1px_#53D2EC] focus:shadow-[0_0_0_2px_#53D2EC]"/>
+            <Form.Control placeholder="Enter your password" onChange={ handleInputValues } value={inputValues.password} className="border box-border inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-white hover:shadow-radixindigo-800 focus:shadow-radixindigo-800"/>
           </div>
         </Form.Field>
-        <Form.Submit className="mt-2.5 box-border text-white inline-flex h-[35px] w-full items-center justify-center rounded bg-radixcyan-800 px-[15px] font-medium leading-none text-violet11 shadow-[0_2px_10px] hover:bg-mauve3 focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none">
+        <Form.Submit className="flex w-full mt-5 justify-center text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1.5 rounded">
           Log in
+        </Form.Submit>
+        <p className="text-center">or</p>
+        <Form.Submit className="flex w-full justify-center text-sm text-white items-center bg-[#30A46C] hover:bg-[#2B9A66] px-2 py-1.5 rounded">
+          Log in with demo account
         </Form.Submit>
       </Form.Root>
     </>
