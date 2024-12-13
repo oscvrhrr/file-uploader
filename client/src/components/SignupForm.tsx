@@ -10,15 +10,35 @@ const SignupForm = () => {
     setInputValues((prevstate) => ({...prevstate, [name]: value }))
   }
 
+  const signUpUser = async() => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}users/signup`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(inputValues)
+      });
+      if(response.ok) {
+        console.log("user created")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  } 
+
+
 
 
   return (
     <>
-      <Form.Root className="w-[280px] h-[300px] z-10 p-8 border border-radixgray-700 rounded-lg absolute left-1/2 bottom-1/2 bg-radixgray-200">
+      <Form.Root onSubmit={ signUpUser } className="w-[280px] h-[300px] z-10 p-8 border border-radixgray-700 rounded-lg absolute left-1/2 bottom-1/2 bg-radixgray-200">
         <h2 className="text-center">Sign up</h2>
         <Form.Field name="fullname">
           <Form.Label>fullname</Form.Label>
-          <Form.Control className="box-border texb border border-radixgray-700 inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-black hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
+          <Form.Control className="box-border texb border border-radixgray-700 inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-black hover:shadow-radixindigo-800 focus:shadow-[0_0_0_2px_black]"
             placeholder="Enter your fullname"
             required
             value={ inputValues.fullname }
@@ -27,7 +47,7 @@ const SignupForm = () => {
         </Form.Field>
         <Form.Field name="password">
           <Form.Label>password</Form.Label>
-          <Form.Control className="box-border border border-radixgray-700 inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-black hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black]"
+          <Form.Control className="box-border border border-radixgray-700 inline-flex h-[35px] w-full appearance-none items-center justify-center rounded bg-blackA2 px-2.5 text-[15px] leading-none text-black shadow-[0_0_0_1px] shadow-blackA6 outline-none selection:bg-blackA6 selection:text-black hover:shadow-radixindigo-800 focus:shadow-[0_0_0_2px_black]"
             placeholder="Enter your password"
             required
             value={ inputValues.password }
