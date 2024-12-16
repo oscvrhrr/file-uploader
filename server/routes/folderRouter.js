@@ -6,7 +6,7 @@ const folderRouter = Router();
 
 
 // const { deleteFileById, deleteFolderById } = require("../controllers/dashboardController")
-const { getFolderAndFilesById, getFileData, uploadFileInFolder } = require("../controllers/folderController")
+const { getFolderAndFilesById, getFileData, uploadFileInFolder, updateFolder } = require("../controllers/folderController")
 
 // const storage = multer.memoryStorage({
 //     destination: function (req, file, cb) {
@@ -23,7 +23,9 @@ const { getFolderAndFilesById, getFileData, uploadFileInFolder } = require("../c
 
 // folderRouter.post("/file/:fileId", deleteFileById )
 
-folderRouter.get("/folder/:folderId", getFolderAndFilesById)
+folderRouter.get("/:folderId", getFolderAndFilesById)
+
+folderRouter.patch("/:folderid", updateFolder)
 
 // folderRouter.post("/folder/:folderId/file", upload.single("file"), uploadFileInFolder);
 

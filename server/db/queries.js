@@ -127,6 +127,19 @@ const readQueries = {
     }
 }
 
+updateQueries = {
+    async updateFolderName(folderId, folderName) {
+      await prisma.folder.update({
+        where: {
+            id: folderId
+        },
+        data: {
+            name: folderName
+        }
+      })
+    },
+};
+
 deleteQueries = {
   async deleteFileById(fileId) {
     await prisma.file.delete({
@@ -142,12 +155,13 @@ deleteQueries = {
             id: folderId
         }
     })
-  }
-}
+  },
+};
 
 module.exports = {
     createQueries,
     readQueries,
+    updateQueries,
     deleteQueries,
     prisma
 }

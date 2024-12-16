@@ -20,7 +20,7 @@ async function getFolderAndFilesById(req, res) {
     const folderId = Number(req.params.folderId);
     const folder = await db.readQueries.getFolderbyId(folderId);
     console.log(folder)
-    res.status(200).render("folder", { folder: [folder], files: folder.files})
+    res.status(200).json({ folder })
   } catch (err) {
     console.err("error opening folder", err)
   }
@@ -40,6 +40,18 @@ async function uploadFileInFolder(req, res) {
   }
 }
 
+async function updateFolder(req, res) {
+  try {
+    const { folderid } = await req.params;
+    const { name } = await req.body
+    const id = Number(folderid)
+    await db.updateQueries.updateFolderName(id, name)
+    res.status(200).json("update successful")
+  } catch (error) {
+    console.log("error updating folder name", error)
+  }
+}
+
 
 
 
@@ -48,4 +60,5 @@ module.exports = {
     getFileData,
     getFolderAndFilesById,
     uploadFileInFolder,
+    updateFolder,
 }
