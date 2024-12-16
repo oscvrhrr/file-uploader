@@ -5,7 +5,7 @@ import { useState } from "react";
 
 
 interface OptionsProps {
-  folderId: number;
+  folderId: number | null;
 }
 
 const Options = ({ folderId }: OptionsProps) => {

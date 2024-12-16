@@ -19,7 +19,7 @@ const File = ({ name, created, size, openFile }:FileProps) => {
           <div className="w-1/2 flex justify-between cursor-text">
             <p>{size} bytes</p>
             <p>{formatDate(created)}</p>
-            <Options/>
+            <Options folderId={null}/>
             {/* <div className="hover:border-radixindigo-700 h-full p-1 rounded border">
               <DotsHorizontalIcon/>
             </div> */}
