@@ -52,6 +52,16 @@ async function updateFolder(req, res) {
   }
 }
 
+async function deleteFolder(req, res) {
+  try {
+    const { folderid } = await req.params;
+    const id = Number(folderid);
+    await db.deleteQueries.deleteFolderById(id)
+    res.status(200).json("folder deleted")
+  } catch (error) {
+    console.log("error deleting folder", error)
+  }
+}
 
 
 
@@ -61,4 +71,5 @@ module.exports = {
     getFolderAndFilesById,
     uploadFileInFolder,
     updateFolder,
+    deleteFolder,
 }
