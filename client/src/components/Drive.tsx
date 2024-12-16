@@ -1,9 +1,10 @@
 import { DriveType } from "../types/drive"
-import { FileIcon, ArchiveIcon } from "@radix-ui/react-icons";
-import FileImage from "./FileImage";
 import { useState } from "react";
 import { FileType } from "../types/drive";
-import Options from "./Options";
+import Folder from "./Folder";
+import File from "./File";
+import FileImage from "./FileImage";
+
 
 interface DriveProps {
   drive: DriveType;
@@ -17,8 +18,6 @@ const Drive = ({ drive }:DriveProps) => {
   const handleFileActive = () => {
     setIsFileActive(!isFileActive);
   }
-
-
 
 
   const handleFile = async(fileId: number) => {
@@ -47,18 +46,7 @@ const Drive = ({ drive }:DriveProps) => {
       </div>
       {drive && drive.folders ? (
           drive.folders.map((folder, index) => (
-            <div className="flex hover:bg-radixgray-300 p-2 border-b items-center" key={index}>
-              <ArchiveIcon/>
-              <p className="w-1/2 ml-1">{folder.name}</p>
-              <div className="w-1/2 flex justify-between">
-                <p className="w-16">-</p>
-                <p>{folder.created}</p>
-                <Options/>
-                {/* <div className="hover:border-radixindigo-700 h-full p-1 rounded border">
-                  <DotsHorizontalIcon/>
-                </div> */}
-              </div>
-            </div>
+            <Folder key={index} name={folder.name} created={folder.created} id={folder.id}/>
           ))
         ) : (
             <div>Loading</div> )
@@ -68,18 +56,13 @@ const Drive = ({ drive }:DriveProps) => {
         
         { drive && drive.files?
           drive.files.map((file, index) => (
-            <div className="flex hover:bg-radixgray-300 items-center px-2 border-b" key={index}>
-              <FileIcon/>
-              <p onClick={async() => { await handleFile(file.id); handleFileActive()}} className="w-1/2 py-2 ml-1 cursor-pointer">{file.name === "" ? "untitled" : file.name}</p>
-              <div className="w-1/2 flex justify-between cursor-text">
-                <p>{file.size} bytes</p>
-                <p>{file.created}</p>
-                <Options/>
-                {/* <div className="hover:border-radixindigo-700 h-full p-1 rounded border">
-                  <DotsHorizontalIcon/>
-                </div> */}
-              </div>
-            </div>
+            <File 
+              key={index}
+              name={file.name} 
+              size={file.size} 
+              created={file.created} 
+              openFile={async() => { await handleFile(file.id); handleFileActive()}}
+            />
           )): (
             <div>loading</div>
           )
