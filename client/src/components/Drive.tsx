@@ -45,8 +45,8 @@ const Drive = ({ drive }:DriveProps) => {
         </div>
       </div>
       {drive && drive.folders ? (
-          drive.folders.map((folder, index) => (
-            <Folder key={index} name={folder.name} created={folder.created} id={folder.id}/>
+          drive.folders.map((folder) => (
+            <Folder key={folder.id} name={folder.name} created={folder.created} id={folder.id}/>
           ))
         ) : (
             <div>Loading</div> )
@@ -55,9 +55,9 @@ const Drive = ({ drive }:DriveProps) => {
         {isFileActive && <FileImage filename={file?.name || 'loading'} toggle={ handleFileActive } path={`https://fzyxhpuljtyplklakuoy.supabase.co/storage/v1/object/public/Files_fileupload/${file?.path}`}/>}
         
         { drive && drive.files?
-          drive.files.map((file, index) => (
+          drive.files.map((file) => (
             <File 
-              key={index}
+              key={file.id}
               name={file.name} 
               size={file.size} 
               created={file.created} 
