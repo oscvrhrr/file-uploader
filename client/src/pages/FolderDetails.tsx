@@ -1,19 +1,27 @@
 import Layout from "../components/Layout"
 import FolderTable from "../components/FolderTable"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router"
-import { FileType, FolderType } from "../types/drive"
+import UploadFile from "../components/UploadFile"
 import { Flex } from "@radix-ui/themes"
+import { Button } from "@radix-ui/themes"
 import { PersonIcon } from "@radix-ui/react-icons"
+import { UploadIcon }from "@radix-ui/react-icons"
+import { FileType, FolderType } from "../types/drive"
 import { useContext } from "react"
 import { UserContext } from "../components/context/UserContext"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router"
 
 
 const FolderDetails = () => {
   const [folder, setFolder] = useState<FolderType>();
-  const [files, setFiles] = useState<FileType[]>([])
+  const [files, setFiles] = useState<FileType[]>([]);
+  const [toggle, setToggle] = useState(false);
   const { folderid } = useParams()
   const { user } = useContext(UserContext)
+
+  const handleButtonToggle = () => {
+    setToggle(!toggle)
+  }
 
 
   useEffect(() => {
@@ -49,12 +57,12 @@ const FolderDetails = () => {
             <h2 className="font-bold">{folder?.name}</h2>
             </div>
             <div className="flex">
-              {/* { toggle && 
-                <UploadFile driveId={ drive.id } onUploadSuccess={ handleRefresh } toggle={ handleButtonToggle }/>
+              { toggle && 
+                <UploadFile driveId={ 0 } onUploadSuccess={ () => {} } toggle={ handleButtonToggle }/>
               }
               <Button onClick={handleButtonToggle} className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 ml-4 rounded" size="3" variant="soft" radius="large">
                 <UploadIcon/> Upload file
-              </Button> */}
+              </Button>
             </div>
           </Flex>
         <FolderTable files={ files } />

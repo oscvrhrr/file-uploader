@@ -7,6 +7,7 @@ import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../components/context/UserContext";
 import { Button, Flex } from "@radix-ui/themes";
 import { UploadIcon, PlusIcon, PersonIcon } from "@radix-ui/react-icons";
+import { RefreshContextProvider } from "../components/context/FolderContext";
 
 
 
@@ -99,7 +100,9 @@ const Dashboard = () => {
             </Button>
           </div>
         </Flex>
-        <Drive drive={drive} />
+        <RefreshContextProvider value={{refresh, setRefresh}}>
+          <Drive drive={drive} />
+        </RefreshContextProvider>
       </Layout>
     </>
   );
