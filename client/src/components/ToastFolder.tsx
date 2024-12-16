@@ -31,7 +31,7 @@ const ToastFolder = ({onClick}: ToastFolder) => {
 				}}
 			>
 				<PlusIcon/>
-				Add to calendar
+				New Folder
 			</button>
 
 			<Toast.Root
