@@ -45,7 +45,9 @@ const Drive = ({ drive }:DriveProps) => {
         </div>
       </div>
       {drive && drive.folders ? (
-          drive.folders.map((folder) => (
+          drive.folders
+          .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+          .map((folder) => (
             <Folder key={folder.id} name={folder.name} created={folder.created} id={folder.id}/>
           ))
         ) : (
