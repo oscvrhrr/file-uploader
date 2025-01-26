@@ -4,12 +4,12 @@ import UploadFile from "../components/UploadFile"
 import { Flex } from "@radix-ui/themes"
 import { Button } from "@radix-ui/themes"
 import { PersonIcon } from "@radix-ui/react-icons"
-import { UploadIcon }from "@radix-ui/react-icons"
+import { UploadIcon, ArrowLeftIcon }from "@radix-ui/react-icons"
 import { FileType, FolderType } from "../types/drive"
 import { useContext } from "react"
 import { UserContext } from "../components/context/UserContext"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { Link, useParams } from "react-router"
 
 
 const FolderDetails = () => {
@@ -50,21 +50,25 @@ const FolderDetails = () => {
     <>
       <Layout>
         <Flex className="flex justify-between px-10 py-4">
-            <div className="flex items-center">
+          <div className="flex items-center">
+          <Link className="flex items-center mr-6 hover:text-radixindigo-1100 hover:underline" to="/dashboard" >
+           <ArrowLeftIcon/> Go Back
+          </Link>
             <PersonIcon className="mr-1"/>
             <h2 className="font-bold">{user && user.username.charAt(0).toUpperCase() + user.username.slice(1)}'s Drive</h2>
             <span className=" mx-1">&lt;</span>
             <h2 className="font-bold">{folder?.name}</h2>
-            </div>
-            <div className="flex">
-              { toggle && 
-                <UploadFile driveId={ 0 } onUploadSuccess={ () => {} } toggle={ handleButtonToggle }/>
-              }
-              <Button onClick={handleButtonToggle} className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 ml-4 rounded" size="3" variant="soft" radius="large">
-                <UploadIcon/> Upload file
-              </Button>
-            </div>
-          </Flex>
+          </div>
+          <div className="flex">
+            { toggle && 
+              <UploadFile driveId={ 0 } onUploadSuccess={ () => {} } toggle={ handleButtonToggle }/>
+            }
+            <Button onClick={handleButtonToggle} className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 ml-4 rounded" size="3" variant="soft" radius="large">
+              <UploadIcon/> Upload file
+            </Button>
+          </div>
+        </Flex>
+        
         <FolderTable files={ files } />
       </Layout>
     </>
