@@ -138,6 +138,17 @@ updateQueries = {
         }
       })
     },
+
+    async updateFileName(id, name) {
+        await prisma.file.update({
+            where: {
+                id
+            },
+            data: {
+                name
+            }
+        })
+    },
 };
 
 deleteQueries = {

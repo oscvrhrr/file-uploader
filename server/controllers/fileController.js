@@ -2,8 +2,6 @@ const db = require("../db/queries");
 
 
 
-
-
 async function deleteFileById(req, res) {
   try {
     const fileId = Number(req.params.fileId)
@@ -14,21 +12,21 @@ async function deleteFileById(req, res) {
   }
 }
 
-async function deleteFolderById(req, res) {
+async function updateFileById(req, res) {
   try {
-    const folderId = Number(req.params.folderId)
-    await db.deleteQueries.deleteFolderById(folderId);
-    res.redirect("/dashboard")
-  } catch (err) {
-    console.log("Error deleting folder", err);
+    const { fileId } = req.params;
+    const { name } = req.body;
+    await db.updateQueries.updateFileName(Number(fileId), name);
+    res.status(200).json("update successful")
+  } catch (err){
+    console.log("error updating filename", err)
   }
+  
 }
 
 
 
-
 module.exports = {
-    getFileData,
-    deleteFileById,
-    deleteFolderById,
+  deleteFileById,
+  updateFileById
 }

@@ -97,18 +97,6 @@ const Dashboard = () => {
               await createFolder(event);
               handleRefresh();
             }}/>
-            {/* <Button
-              onClick={async (event) => {
-                await createFolder(event);
-                handleRefresh();
-              }}
-              className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 rounded"
-              size="2"
-              variant="soft"
-              radius="large"
-            >
-              <PlusIcon /> Create folder
-            </Button> */}
             {toggle && (
               <UploadFile
                 driveId={drive.id}

@@ -7,10 +7,11 @@ import { RefreshContext } from "./context/FolderContext";
 
 
 interface OptionsProps {
-  folderId: number | null;
+  id: number | null;
+  type: "folders" | "file"
 }
 
-const Options = ({ folderId }: OptionsProps) => {
+const Options = ({ id, type }: OptionsProps) => {
   const [inputValue, setInputValue] = useState({ name: "" })
   const [isActive, setIsActive] = useState(false)
   const { refresh, setRefresh } = useContext(RefreshContext)
@@ -26,7 +27,7 @@ const Options = ({ folderId }: OptionsProps) => {
   }
 
   const updateFolderName = async() => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}folders/${folderId}`, {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}${type}/${id}`, {
       method: "PATCH",
       mode: "cors",
       headers: {
@@ -36,12 +37,12 @@ const Options = ({ folderId }: OptionsProps) => {
       body: JSON.stringify(inputValue)
     });
     if(response.ok) {
-      console.log("folder name updated")
+      console.log(`${type} name updated`)
     }
   }
 
   const deleteFolder = async() => {
-    const response = await fetch(`${import.meta.env.VITE_BASE_URL}folders/${folderId}`, {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}${type}/${id}`, {
       method: "DELETE",
       mode: "cors",
       headers: {
@@ -50,7 +51,7 @@ const Options = ({ folderId }: OptionsProps) => {
       },
     });
     if(response.ok) {
-      console.log("folder deleted")
+      console.log(`${type} deleted`)
     }
   }
 
@@ -68,7 +69,7 @@ const Options = ({ folderId }: OptionsProps) => {
               <Cross1Icon/>
             </Toggle.Root>  
             <div className="w-full">
-              <input  onChange={handleInputValue} value={inputValue.name} type="text" name="name" placeholder="Rename folder.." className="inline-flex h-[25px] flex-1 w-full items-center justify-center rounded text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8" />
+              <input  onChange={handleInputValue} value={inputValue.name} type="text" name="name" placeholder={`Rename ${type}...`} className="inline-flex h-[25px] flex-1 w-full items-center justify-center rounded text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8" />
               <p onClick={async() => { await updateFolderName(); handleisActive(); setRefresh(!refresh)}} className="hover:bg-radixindigo-400 rounded flex items-center">
                 <Pencil2Icon className="mx-1"/>
                 edit

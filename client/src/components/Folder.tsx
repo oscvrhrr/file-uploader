@@ -22,7 +22,7 @@ const Folder = ({ name, created, id }: FolderProps) => {
               <div className="w-1/2 flex justify-between">
                 <p className="w-16">-</p>
                 <p>{formatDate(created)}</p>
-                <Options folderId={id}/>
+                <Options id={id} type="folders"/>
                 {/* <div className="hover:border-radixindigo-700 h-full p-1 rounded border">
                   <DotsHorizontalIcon/>
                 </div> */}

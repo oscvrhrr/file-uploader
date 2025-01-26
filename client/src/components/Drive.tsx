@@ -60,6 +60,7 @@ const Drive = ({ drive }:DriveProps) => {
           drive.files.map((file) => (
             <File 
               key={file.id}
+              id={file.id}
               name={file.name} 
               size={file.size} 
               created={file.created} 

@@ -4,13 +4,14 @@ import { formatDate } from "../lib/utils";
 
 
 interface FileProps {
+  id: number;
   name: string;
   size: number;
   created: string;
   openFile: () => void
 }
 
-const File = ({ name, created, size, openFile }:FileProps) => {
+const File = ({ id, name, created, size, openFile }:FileProps) => {
   return (
    <>
     <div className="flex hover:bg-radixgray-300 items-center px-2 border-b">
@@ -19,7 +20,7 @@ const File = ({ name, created, size, openFile }:FileProps) => {
           <div className="w-1/2 flex justify-between cursor-text">
             <p>{size} bytes</p>
             <p>{formatDate(created)}</p>
-            <Options folderId={null}/>
+            <Options id={id} type="file"/>
             {/* <div className="hover:border-radixindigo-700 h-full p-1 rounded border">
               <DotsHorizontalIcon/>
             </div> */}
