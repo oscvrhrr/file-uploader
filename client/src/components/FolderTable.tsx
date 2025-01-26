@@ -18,7 +18,7 @@ const FolderTable = ({ files  }: FolderTableProps) => {
       </div>
       {
         files && files.length > 0 ? files.map((file, index) => (
-          <File key={index} name={file.name} created={file.created} size={file.size} openFile={() => {}}/>
+          <File key={index} id={file.id} name={file.name} created={file.created} size={file.size} openFile={() => {}}/>
         )) :
         (
           <h1 className="flex py-2 items-center px-2 border-b text-radixgray-1000">This folder is empty..</h1>
