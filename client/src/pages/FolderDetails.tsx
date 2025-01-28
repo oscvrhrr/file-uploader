@@ -16,12 +16,18 @@ const FolderDetails = () => {
   const [folder, setFolder] = useState<FolderType>();
   const [files, setFiles] = useState<FileType[]>([]);
   const [toggle, setToggle] = useState(false);
+  const [refresh, setRefresh] = useState(false);
   const { folderid } = useParams()
   const { user } = useContext(UserContext)
 
   const handleButtonToggle = () => {
     setToggle(!toggle)
   }
+
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+    console.log("this function ran")
+  };
 
 
   useEffect(() => {
@@ -42,8 +48,7 @@ const FolderDetails = () => {
       }
     };
     fetchFolder()
-  }, [folderid])
-
+  }, [folderid, refresh])
 
 
   return (
@@ -61,7 +66,7 @@ const FolderDetails = () => {
           </div>
           <div className="flex">
             { toggle && 
-              <UploadFile driveId={ 0 } onUploadSuccess={ () => {} } toggle={ handleButtonToggle }/>
+              <UploadFile resourceId={folder?.id || null} resource="folders" onUploadSuccess={ handleRefresh } toggle={ handleButtonToggle }/>
             }
             <Button onClick={handleButtonToggle} className="flex text-sm text-white items-center bg-radixindigo-900 hover:bg-radixindigo-1000 px-2 py-1 ml-4 rounded" size="3" variant="soft" radius="large">
               <UploadIcon/> Upload file

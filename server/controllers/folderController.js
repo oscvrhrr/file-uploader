@@ -33,10 +33,11 @@ async function uploadFileInFolder(req, res) {
     const outputFile = decodeFile(req.file);
     uploadFileInBucket(outputFile, req.file, user.username);
     const drive = await db.readQueries.getDrive(req.user.id);
-    await db.createQueries.createFile(req.body['file-name'], req.file.size, `user-uploads/${user.username}/${req.file.originalname}`, drive.id, folderId)
-    res.redirect(`/dashboard/folder/${folderId}`)
+    await db.createQueries.createFile(req.body['name'], req.file.size, `user-uploads/${user.username}/${req.file.originalname}`, drive.id, folderId)
+    res.status(201).json("file created in folder")
   } catch (err) {
-    console.error("Error uploading file in folder", err)
+    console.error("Error uploading file in folder", err);
+    res.status(500).send("Error uploading file in folder");
   }
 }
 

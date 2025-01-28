@@ -3,12 +3,13 @@ import { Cross1Icon } from "@radix-ui/react-icons"
 import { useState } from "react";
 
 interface UploadFileProps {
+  resource: "drives" | "folders";
+  resourceId: number | null;
   toggle: () => void ;
-  driveId: number | null;
   onUploadSuccess: () => void
 }
 
-const UploadFile = ({ toggle, driveId, onUploadSuccess }:UploadFileProps) => {
+const UploadFile = ({ resource, resourceId, toggle, onUploadSuccess }:UploadFileProps) => {
   const [inputValue, setInputValue] = useState({ name: "" });
   const [file, setFile] = useState<File | null>(null);
   
@@ -31,7 +32,7 @@ const UploadFile = ({ toggle, driveId, onUploadSuccess }:UploadFileProps) => {
         formData.append("file", file)
       }
 
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}drives/${driveId}/file`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}${resource}/${resourceId}/file`, {
         method: "POST",
         mode: "cors",
         headers: {

@@ -99,7 +99,8 @@ const Dashboard = () => {
             }}/>
             {toggle && (
               <UploadFile
-                driveId={drive.id}
+                resource="drives"
+                resourceId={drive.id}
                 onUploadSuccess={handleRefresh}
                 toggle={handleButtonToggle}
               />
