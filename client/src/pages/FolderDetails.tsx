@@ -17,7 +17,6 @@ const FolderDetails = () => {
   const [folder, setFolder] = useState<FolderType>();
   const [files, setFiles] = useState<FileType[]>([]);
   const [toggle, setToggle] = useState(false);
-  // const [refresh, setRefresh] = useState(false);
   const { folderid } = useParams()
   const { user } = useContext(UserContext)
   const { setRefresh, refresh } = useContext(RefreshContext)
