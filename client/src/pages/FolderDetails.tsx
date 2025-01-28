@@ -10,15 +10,17 @@ import { useContext } from "react"
 import { UserContext } from "../components/context/UserContext"
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router"
+import { RefreshContext } from "../components/context/FolderContext"
 
 
 const FolderDetails = () => {
   const [folder, setFolder] = useState<FolderType>();
   const [files, setFiles] = useState<FileType[]>([]);
   const [toggle, setToggle] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
   const { folderid } = useParams()
   const { user } = useContext(UserContext)
+  const { setRefresh, refresh } = useContext(RefreshContext)
 
   const handleButtonToggle = () => {
     setToggle(!toggle)
@@ -26,7 +28,6 @@ const FolderDetails = () => {
 
   const handleRefresh = () => {
     setRefresh(!refresh);
-    console.log("this function ran")
   };
 
 

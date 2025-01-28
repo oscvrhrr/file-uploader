@@ -7,13 +7,14 @@ import { useEffect, useContext, useState } from "react";
 import { UserContext } from "../components/context/UserContext";
 import { Button, Flex } from "@radix-ui/themes";
 import { UploadIcon, PersonIcon } from "@radix-ui/react-icons";
-import { RefreshContextProvider } from "../components/context/FolderContext";
 import ToastFolder from "../components/ToastFolder";
+import { RefreshContext } from "../components/context/FolderContext";
 
 const Dashboard = () => {
   const { setUser, user } = useContext(UserContext);
+  const { setRefresh, refresh } = useContext(RefreshContext);
   const [toggle, setToggle] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+
 
   const [drive, setDrive] = useState<DriveType>({
     id: null,
@@ -69,7 +70,6 @@ const Dashboard = () => {
         );
         if (response.ok) {
           const parsedData = await response.json();
-          console.log(parsedData);
           setUser(parsedData.user);
           setDrive(parsedData.drive);
         }
@@ -116,9 +116,7 @@ const Dashboard = () => {
             </Button>
           </div>
         </Flex>
-        <RefreshContextProvider value={{ refresh, setRefresh }}>
-          <Drive drive={drive} />
-        </RefreshContextProvider>
+        <Drive drive={drive} />
       </Layout>
     </>
   );

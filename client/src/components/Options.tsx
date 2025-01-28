@@ -26,6 +26,11 @@ const Options = ({ id, type }: OptionsProps) => {
     setIsActive(!isActive)
   }
 
+  const handleRefresh = () => {
+    console.log('handleRefresh called');
+    setRefresh(!refresh);
+  }
+
   const updateFolderName = async() => {
     const response = await fetch(`${import.meta.env.VITE_BASE_URL}${type}/${id}`, {
       method: "PATCH",
@@ -70,7 +75,7 @@ const Options = ({ id, type }: OptionsProps) => {
             </Toggle.Root>  
             <div className="w-full">
               <input  onChange={handleInputValue} value={inputValue.name} type="text" name="name" placeholder={`Rename ${type}...`} className="inline-flex h-[25px] flex-1 w-full items-center justify-center rounded text-[13px] leading-none text-violet11 shadow-[0_0_0_1px] shadow-violet7 outline-none focus:shadow-[0_0_0_2px] focus:shadow-violet8" />
-              <p onClick={async() => { await updateFolderName(); handleisActive(); setRefresh(!refresh)}} className="hover:bg-radixindigo-400 rounded flex items-center">
+              <p onClick={async() => { await updateFolderName(); handleisActive(); handleRefresh()}} className="hover:bg-radixindigo-400 rounded flex items-center">
                 <Pencil2Icon className="mx-1"/>
                 edit
               </p>
