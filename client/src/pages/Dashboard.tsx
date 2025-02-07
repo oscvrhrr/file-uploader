@@ -14,8 +14,6 @@ const Dashboard = () => {
   const { setUser, user } = useContext(UserContext);
   const { setRefresh, refresh } = useContext(RefreshContext);
   const [toggle, setToggle] = useState(false);
-
-
   const [drive, setDrive] = useState<DriveType>({
     id: null,
     ownerId: null,

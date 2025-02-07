@@ -1,25 +1,19 @@
 import * as Form from "@radix-ui/react-form"
-import React, { useState } from "react"
+// import React, { useState } from "react"
 import { useNavigate } from "react-router"
 import * as Toggle from "@radix-ui/react-toggle"
 import { Cross1Icon } from "@radix-ui/react-icons"
-
+import { useLogin } from "../hooks/useLogin"
 
 interface LoginFormProps {
   toggle: () => void ;
 }
 
 
-const LoginForm = ({toggle}: LoginFormProps ) => {
-  const [inputValues, setInputValues] = useState({ username: "", password: "" })
+const LoginForm = ({ toggle }: LoginFormProps ) => {
+  const { inputValues, handleInputValues, handleLogin } = useLogin()
   const navigate = useNavigate()
 
-
-  const handleInputValues = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setInputValues((prevstate) => ({ ...prevstate, [name]: value }))
- 
-  }
 
   const handleDemo = async(e: React.FormEvent) => {
     e.preventDefault()
@@ -33,7 +27,6 @@ const LoginForm = ({toggle}: LoginFormProps ) => {
         body: JSON.stringify({ username: "demo", password: "demopassword"})
       });
       if(response.ok) {
-        console.log("i got the response")
         const data = await response.json();
         if(data) {
          localStorage.setItem("token", data.token);
@@ -45,35 +38,6 @@ const LoginForm = ({toggle}: LoginFormProps ) => {
      console.log(error)
     }
   }
-
-  const handleLogin =  async(e: React.FormEvent) => {
-    e.preventDefault();
-   try {
-     const response = await fetch(`${import.meta.env.VITE_BASE_URL}users/login`, {
-       method: "POST",
-       mode: "cors",
-       headers: {
-         "Content-Type": "application/json",
-       },
-       body: JSON.stringify(inputValues)
-     });
-     if(response.ok) {
-       console.log("i got the response")
-       const data = await response.json();
-       if(data) {
-        localStorage.setItem("token", data.token);
-        navigate("/dashboard");
-        
-       }
-     }
-   } catch (error) {
-    console.log(error)
-   }
-  }
-
-
-
-
 
   return (
     <>
